@@ -27,10 +27,18 @@ public class AvailableCommandParser implements Parser<AvailableCommand> {
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_GROUP);
 
+        if (!StatefulParserUtil.arePrefixesPresent(argMultimap, PREFIX_GROUP)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AvailableCommand.MESSAGE_USAGE));
+        }
+
         String tutorialGroup = argMultimap.getValue(PREFIX_GROUP).get();
 
         TutorialTag tutorialTag = new TutorialTag(tutorialGroup, TagStatus.AVAILABLE);
 
-        return new AvailableCommand(new TutorialTagContainsGroupPredicate(tutorialGroup), tutorialTag);
+        try {
+            return new AvailableCommand(new TutorialTagContainsGroupPredicate(tutorialGroup), tutorialTag);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
     }
 }

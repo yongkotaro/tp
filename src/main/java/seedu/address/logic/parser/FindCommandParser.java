@@ -52,7 +52,6 @@ public class FindCommandParser implements Parser<FindCommand> {
                 List<String> separated = StringListUtil.separateWithSpaces(keywords);
                 predicates.add(new FieldContainsKeywordsPredicate(prefix, separated));
             }
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         return new FindCommand(predicates);
