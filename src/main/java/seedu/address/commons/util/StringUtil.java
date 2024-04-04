@@ -80,7 +80,7 @@ public class StringUtil {
         requireNonNull(word);
 
         String tagName = tag.getTagName().toLowerCase();
-        String preppedWord = word.trim();
+        String preppedWord = word.trim().toLowerCase();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         validTutorials = instance.model.getTutorialTagList();
 
